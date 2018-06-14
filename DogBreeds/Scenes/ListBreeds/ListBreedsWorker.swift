@@ -24,7 +24,9 @@ class ListBreedsWorker
     func fetchBreeds(completionHandler: @escaping ([Breed], BreedsStoreError?) -> Void)
     {
         breedsStore.fetchBreeds { (breeds, error) in
-            completionHandler(breeds, error)
+            DispatchQueue.main.async {
+                completionHandler(breeds, error)
+            }
         }
     }
 }

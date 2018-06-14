@@ -46,14 +46,31 @@ class ListBreedsPresenterTests: XCTestCase
         // MARK: Method call expectations
         
         var displayFetchedBreedsCalled = false
+        var displayLoadingHudCalled = false
+        var dismissLoadingHudCalled = false
+        var displayErrorCalled = false
         
         // MARK: Argument expectations
         
         var viewModel: ListBreeds.FetchBreeds.ViewModel!
         
+        // MARK: Spied Methods
+        
         func displayFetchedBreeds(viewModel: ListBreeds.FetchBreeds.ViewModel) {
             displayFetchedBreedsCalled = true
             self.viewModel = viewModel
+        }
+        
+        func displayLoadingHud() {
+            displayLoadingHudCalled = true
+        }
+        
+        func dismissLoadingHud() {
+            dismissLoadingHudCalled = true
+        }
+        
+        func displayError(error: String) {
+            displayErrorCalled = true
         }
     }
     

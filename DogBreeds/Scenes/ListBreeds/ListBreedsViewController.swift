@@ -16,6 +16,9 @@ import JGProgressHUD
 protocol ListBreedsDisplayLogic: class
 {
     func displayFetchedBreeds(viewModel: ListBreeds.FetchBreeds.ViewModel)
+    func displayLoadingHud()
+    func dismissLoadingHud()
+    func displayError(error: String)
 }
 
 class ListBreedsViewController: UITableViewController, ListBreedsDisplayLogic
@@ -89,10 +92,8 @@ class ListBreedsViewController: UITableViewController, ListBreedsDisplayLogic
     
     func displayFetchedBreeds(viewModel: ListBreeds.FetchBreeds.ViewModel) {
         //Hide loading view
-        DispatchQueue.main.async {
-            if let hud = self.hud {
-                hud.dismiss()
-            }
+        if let hud = self.hud {
+            hud.dismiss()
         }
         
         if viewModel.errorMessage != nil {
@@ -104,9 +105,23 @@ class ListBreedsViewController: UITableViewController, ListBreedsDisplayLogic
         } else {
             displayedBreeds = viewModel.displayedBreeds
         }
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        self.tableView.reloadData()
+    }
+    
+    // MARK: - UI Updates
+    
+    func displayLoadingHud() {
+        
+    }
+    
+    func dismissLoadingHud() {
+        if let hud = self.hud {
+            hud.dismiss()
         }
+    }
+    
+    func displayError(error: String) {
+        
     }
     
     // MARK: - Table view data source

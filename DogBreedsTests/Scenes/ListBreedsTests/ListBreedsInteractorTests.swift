@@ -45,8 +45,23 @@ class ListBreedsInteractorTests: XCTestCase
     {
         // MARK: Method call expectations
         var presentFetchedBreedsCalled = false
+        var displayLoadingHudCalled = false
+        var dismissLoadingHudCalled = false
+        var displayErrorCalled = false
         
         // MARK: Spied methods
+        func displayLoadingHud() {
+            displayLoadingHudCalled = true
+        }
+        
+        func dismissLoadingHud() {
+            dismissLoadingHudCalled = true
+        }
+        
+        func displayError(error: BreedsStoreError) {
+            displayErrorCalled = true
+        }
+        
         func presentFetchedBreeds(response: ListBreeds.FetchBreeds.Response) {
             presentFetchedBreedsCalled = true
         }

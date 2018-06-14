@@ -24,7 +24,9 @@ class ListBreedsImagesWorker
     func fetchBreedImageURLs(breedName: String, completionHandler: @escaping ([String], BreedsStoreError?) -> Void)
     {
         breedsStore.fetchBredImagesURLs(forBreed: breedName) { (breedImagesURLs, error) in
-            completionHandler(breedImagesURLs, error)
+            DispatchQueue.main.async {
+                completionHandler(breedImagesURLs, error)
+            }
         }
     }
 }

@@ -15,10 +15,25 @@ import UIKit
 protocol ListBreedsPresentationLogic
 {
     func presentFetchedBreeds(response: ListBreeds.FetchBreeds.Response)
+    func displayLoadingHud()
+    func dismissLoadingHud()
+    func displayError(error: BreedsStoreError)
 }
 
 class ListBreedsPresenter: ListBreedsPresentationLogic
 {
+    func displayLoadingHud() {
+        
+    }
+    
+    func dismissLoadingHud() {
+        
+    }
+    
+    func displayError(error: BreedsStoreError) {
+        
+    }
+    
   weak var viewController: ListBreedsDisplayLogic?
 
     func presentFetchedBreeds(response: ListBreeds.FetchBreeds.Response) {

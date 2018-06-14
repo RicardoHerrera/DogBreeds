@@ -80,9 +80,7 @@ class ListBreedsImagesViewController: UITableViewController, ListBreedsImagesDis
     
     func storageBreedImagesURLs(response: ListBreedsImages.FetchImagesURLs.ViewModel) {
         self.imagesURLs = response.imagesURLs
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
     
     // MARK: - Table view data source

@@ -108,7 +108,7 @@ class ListBreedsImagesViewControllerTests: XCTestCase
         sut.storageBreedImagesURLs(response: viewModel)
         
         // Then
-        XCTAssert(!tableViewSpy.reloadDataCalled, "Displaying fetched breeds should reload the table view")
+        XCTAssert(tableViewSpy.reloadDataCalled, "Displaying fetched breeds should reload the table view")
     }
 }
 
