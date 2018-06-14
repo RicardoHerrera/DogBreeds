@@ -104,7 +104,7 @@ class ListBreedsImagesViewControllerTests: XCTestCase
         
         // When
         let imageURLs = ["https://images.dog.ceo/breeds/spaniel-blenheim/n02086646_1014.jpg"]
-        let viewModel = ListBreedsImages.FetchImagesURLs.ViewModel(imagesURLs: imageURLs, errorMessage: nil)
+        let viewModel = ListBreedsImages.FetchImagesURLs.ViewModel(imagesURLs: imageURLs)
         sut.storageBreedImagesURLs(response: viewModel)
         
         // Then

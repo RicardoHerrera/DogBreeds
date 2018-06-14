@@ -11,10 +11,14 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 protocol ListBreedsImagesDisplayLogic: class
 {
     func storageBreedImagesURLs(response: ListBreedsImages.FetchImagesURLs.ViewModel)
+    func displayLoadingHud()
+    func dismissLoadingHud()
+    func displayError(error: String)
 }
 
 class ListBreedsImagesViewController: UITableViewController, ListBreedsImagesDisplayLogic
@@ -22,6 +26,7 @@ class ListBreedsImagesViewController: UITableViewController, ListBreedsImagesDis
     var interactor: ListBreedsImagesBusinessLogic?
     var router: (NSObjectProtocol & ListBreedsImagesRoutingLogic & ListBreedsImagesDataPassing)?
     var imagesURLs: [String] = []
+    var hud: JGProgressHUD!
     
     // MARK: Object lifecycle
     
@@ -73,6 +78,8 @@ class ListBreedsImagesViewController: UITableViewController, ListBreedsImagesDis
         getBreedImagesURLs()
     }
     
+    // MARK: - Fetch Breed images URLs
+    
     func getBreedImagesURLs() {
         let request = ListBreedsImages.FetchImagesURLs.Request()
         self.interactor?.fetchBreedImagesURLs(request: request)
@@ -81,6 +88,38 @@ class ListBreedsImagesViewController: UITableViewController, ListBreedsImagesDis
     func storageBreedImagesURLs(response: ListBreedsImages.FetchImagesURLs.ViewModel) {
         self.imagesURLs = response.imagesURLs
         self.tableView.reloadData()
+    }
+    
+    // MARK: - UI Updates
+    
+    func displayLoadingHud() {
+        // show loading view
+        if hud == nil {
+            hud = JGProgressHUD(style: .dark)
+        }
+        hud.textLabel.text = "Loading"
+        hud.show(in: self.view)
+    }
+    
+    func dismissLoadingHud() {
+        //Hide loading view
+        if let hud = self.hud {
+            hud.dismiss()
+        }
+    }
+    
+    func displayError(error: String) {
+        // show loading view
+        if hud == nil {
+            hud = JGProgressHUD(style: .dark)
+        }
+        hud.textLabel.text = error
+        hud.indicatorView = JGProgressHUDErrorIndicatorView();
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 3.0)
+        
+        imagesURLs = []
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -102,6 +141,7 @@ class ListBreedsImagesViewController: UITableViewController, ListBreedsImagesDis
             fatalError("Error using BreedImageTableViewCell")
         }
 
+        cell.selectionStyle = .none
         cell.configureCell(with: displayedBreed, placeholderImage: UIImage.init(named: "breedDefault")!)
         return cell
     }

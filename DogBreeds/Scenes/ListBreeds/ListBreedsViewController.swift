@@ -79,49 +79,45 @@ class ListBreedsViewController: UITableViewController, ListBreedsDisplayLogic
     
     // MARK: - Fetch Breeds
     func fetchBreeds() {
-        // show loading view
-        if hud == nil {
-            hud = JGProgressHUD(style: .dark)
-        }
-        hud.textLabel.text = "Loading"
-        hud.show(in: self.view)
-        
         let request = ListBreeds.FetchBreeds.Request()
         interactor?.fetchBreeds(request: request)
     }
     
     func displayFetchedBreeds(viewModel: ListBreeds.FetchBreeds.ViewModel) {
-        //Hide loading view
-        if let hud = self.hud {
-            hud.dismiss()
-        }
-        
-        if viewModel.errorMessage != nil {
-            hud.textLabel.text = viewModel.errorMessage
-            hud.indicatorView = JGProgressHUDErrorIndicatorView();
-            hud.show(in: self.view)
-            hud.dismiss(afterDelay: 3.0)
-            displayedBreeds = []
-        } else {
-            displayedBreeds = viewModel.displayedBreeds
-        }
+        displayedBreeds = viewModel.displayedBreeds
         self.tableView.reloadData()
     }
     
     // MARK: - UI Updates
     
     func displayLoadingHud() {
-        
+        // show loading view
+        if hud == nil {
+            hud = JGProgressHUD(style: .dark)
+        }
+        hud.textLabel.text = "Loading"
+        hud.show(in: self.view)
     }
     
     func dismissLoadingHud() {
+        //Hide loading view
         if let hud = self.hud {
             hud.dismiss()
         }
     }
     
     func displayError(error: String) {
+        // show loading view
+        if hud == nil {
+            hud = JGProgressHUD(style: .dark)
+        }
+        hud.textLabel.text = error
+        hud.indicatorView = JGProgressHUDErrorIndicatorView();
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 3.0)
         
+        displayedBreeds = []
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source

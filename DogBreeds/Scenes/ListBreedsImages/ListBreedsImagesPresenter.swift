@@ -15,6 +15,9 @@ import UIKit
 protocol ListBreedsImagesPresentationLogic
 {
     func storageBreedImagesURLs(response: ListBreedsImages.FetchImagesURLs.Response)
+    func displayLoadingHud()
+    func dismissLoadingHud()
+    func displayError(error: BreedsStoreError)
 }
 
 class ListBreedsImagesPresenter: ListBreedsImagesPresentationLogic
@@ -23,13 +26,20 @@ class ListBreedsImagesPresenter: ListBreedsImagesPresentationLogic
     
     func storageBreedImagesURLs(response: ListBreedsImages.FetchImagesURLs.Response) {
         var viewModel: ListBreedsImages.FetchImagesURLs.ViewModel!
-        if response.error != nil {
-            viewModel = ListBreedsImages.FetchImagesURLs.ViewModel(imagesURLs: [], errorMessage: response.error?.localizedDescription)
-        } else {
-            
-            viewModel = ListBreedsImages.FetchImagesURLs.ViewModel(imagesURLs: response.breedImagesURLs, errorMessage: nil)
-        }
+        viewModel = ListBreedsImages.FetchImagesURLs.ViewModel(imagesURLs: response.breedImagesURLs)
         viewController?.storageBreedImagesURLs(response: viewModel)
+    }
+    
+    func displayLoadingHud() {
+        viewController?.displayLoadingHud()
+    }
+    
+    func dismissLoadingHud() {
+        viewController?.dismissLoadingHud()
+    }
+    
+    func displayError(error: BreedsStoreError) {
+        viewController?.displayError(error: error.localizedDescription)
     }
 }
 

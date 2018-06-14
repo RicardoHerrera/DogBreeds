@@ -30,14 +30,19 @@ class ListBreedsInteractor: ListBreedsBusinessLogic, ListBreedsDataStore
     var breeds: [Breed]?
     
     func fetchBreeds(request: ListBreeds.FetchBreeds.Request) {
+        presenter?.displayLoadingHud()
         worker.fetchBreeds { [weak self](breeds, error) in
             guard let weakSelf = self else {
                 return
             }
-            
+            weakSelf.presenter?.dismissLoadingHud()
             weakSelf.breeds = breeds
-            let response = ListBreeds.FetchBreeds.Response(breeds: breeds, error: error)
-            weakSelf.presenter?.presentFetchedBreeds(response: response)
+            if let error = error {
+                weakSelf.presenter?.displayError(error: error)
+            } else {
+                let response = ListBreeds.FetchBreeds.Response(breeds: breeds)
+                weakSelf.presenter?.presentFetchedBreeds(response: response)
+            }
         }
     }
 }

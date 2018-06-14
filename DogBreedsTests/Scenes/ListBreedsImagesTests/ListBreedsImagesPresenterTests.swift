@@ -44,8 +44,26 @@ class ListBreedsImagesPresenterTests: XCTestCase
     class ListBreedsImagesDisplayLogicSpy: ListBreedsImagesDisplayLogic
     {
         var storageBreedImagesURLsCalled = false
+        var displayLoadingHudCalled = false
+        var dismissLoadingHudCalled = false
+        var displayErrorCalled = false
+        
+        // MARK: Spied Methods
+        
         func storageBreedImagesURLs(response: ListBreedsImages.FetchImagesURLs.ViewModel) {
             storageBreedImagesURLsCalled = true
+        }
+        
+        func displayLoadingHud() {
+            displayLoadingHudCalled = true
+        }
+        
+        func dismissLoadingHud() {
+            dismissLoadingHudCalled = true
+        }
+        
+        func displayError(error: String) {
+            displayErrorCalled = true
         }
     }
     
@@ -58,7 +76,7 @@ class ListBreedsImagesPresenterTests: XCTestCase
         sut.viewController = listBreedURLsDisplayLogicSpy
         
         // When
-        let response = ListBreedsImages.FetchImagesURLs.Response(breedImagesURLs: [], error: nil)
+        let response = ListBreedsImages.FetchImagesURLs.Response(breedImagesURLs: [])
         sut.storageBreedImagesURLs(response: response)
         
         // Then

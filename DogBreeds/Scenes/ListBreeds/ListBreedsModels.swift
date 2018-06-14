@@ -24,7 +24,6 @@ enum ListBreeds
     struct Response
     {
         var breeds: [Breed]
-        var error: BreedsStoreError?
     }
     struct ViewModel
     {
@@ -32,7 +31,6 @@ enum ListBreeds
             var name: String
         }
         var displayedBreeds: [DisplayedBreed]
-        var errorMessage: String?
     }
   }
 }

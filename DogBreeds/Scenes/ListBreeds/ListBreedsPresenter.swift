@@ -15,40 +15,36 @@ import UIKit
 protocol ListBreedsPresentationLogic
 {
     func presentFetchedBreeds(response: ListBreeds.FetchBreeds.Response)
+    func displayError(error: BreedsStoreError)
     func displayLoadingHud()
     func dismissLoadingHud()
-    func displayError(error: BreedsStoreError)
 }
 
 class ListBreedsPresenter: ListBreedsPresentationLogic
 {
-    func displayLoadingHud() {
-        
-    }
-    
-    func dismissLoadingHud() {
-        
-    }
-    
-    func displayError(error: BreedsStoreError) {
-        
-    }
-    
   weak var viewController: ListBreedsDisplayLogic?
 
     func presentFetchedBreeds(response: ListBreeds.FetchBreeds.Response) {
         var viewModel: ListBreeds.FetchBreeds.ViewModel!
-        if response.error != nil {
-            viewModel = ListBreeds.FetchBreeds.ViewModel(displayedBreeds: [], errorMessage: response.error?.localizedDescription)
-        } else {
-            var displayedBreeds: [ListBreeds.FetchBreeds.ViewModel.DisplayedBreed] = []
-            
-            for breed in response.breeds {
-                let displayedBreed = ListBreeds.FetchBreeds.ViewModel.DisplayedBreed(name: breed.name)
-                displayedBreeds.append(displayedBreed)
-            }
-            viewModel = ListBreeds.FetchBreeds.ViewModel(displayedBreeds: displayedBreeds, errorMessage: nil)
+        var displayedBreeds: [ListBreeds.FetchBreeds.ViewModel.DisplayedBreed] = []
+        
+        for breed in response.breeds {
+            let displayedBreed = ListBreeds.FetchBreeds.ViewModel.DisplayedBreed(name: breed.name)
+            displayedBreeds.append(displayedBreed)
         }
+        viewModel = ListBreeds.FetchBreeds.ViewModel(displayedBreeds: displayedBreeds)
         viewController?.displayFetchedBreeds(viewModel: viewModel)
+    }
+    
+    func displayError(error: BreedsStoreError) {
+        viewController?.displayError(error: error.localizedDescription)
+    }
+    
+    func displayLoadingHud() {
+        viewController?.displayLoadingHud()
+    }
+    
+    func dismissLoadingHud() {
+        viewController?.dismissLoadingHud()
     }
 }

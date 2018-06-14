@@ -31,17 +31,19 @@ class ListBreedsImagesInteractor: ListBreedsImagesBusinessLogic, ListBreedsImage
     var breedImagesURLs: [String]?
     
     func fetchBreedImagesURLs(request: ListBreedsImages.FetchImagesURLs.Request) {
+        presenter?.displayLoadingHud()
         worker.fetchBreedImageURLs(breedName: (breed?.name)!) { [weak self] (breedImagesURLs, error) in
             guard let weakSelf = self else {
                 return
             }
-            if error == nil {
-                weakSelf.breedImagesURLs = []
+            weakSelf.presenter?.dismissLoadingHud()
+            if let error = error {
+                weakSelf.presenter?.displayError(error: error)
             } else {
                 weakSelf.breedImagesURLs = breedImagesURLs
+                let response = ListBreedsImages.FetchImagesURLs.Response(breedImagesURLs: breedImagesURLs)
+                weakSelf.presenter?.storageBreedImagesURLs(response: response)
             }
-            let response = ListBreedsImages.FetchImagesURLs.Response(breedImagesURLs: breedImagesURLs, error: error)
-            weakSelf.presenter?.storageBreedImagesURLs(response: response)
         }
     }
 }

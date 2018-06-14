@@ -22,8 +22,13 @@ class BreedImageTableViewCell: UITableViewCell {
     func configureCell(with URLString: String, placeholderImage: UIImage) {
         let size = breedImage.frame.size
         
+        guard let url = URL(string: URLString) else {
+            breedImage.image = placeholderImage
+            return
+        }
+        
         breedImage?.af_setImage(
-            withURL: URL(string: URLString)!,
+            withURL: url,
             placeholderImage: placeholderImage,
             filter: AspectScaledToFillSizeWithRoundedCornersFilter(size: size, radius: 20.0),
             imageTransition: .crossDissolve(0.2)

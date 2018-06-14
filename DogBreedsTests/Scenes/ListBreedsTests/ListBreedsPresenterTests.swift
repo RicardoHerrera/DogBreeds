@@ -84,7 +84,7 @@ class ListBreedsPresenterTests: XCTestCase
         
         // When
         let breed = Breed(name: "Spaniel")
-        let response = ListBreeds.FetchBreeds.Response(breeds: [breed], error: nil)
+        let response = ListBreeds.FetchBreeds.Response(breeds: [breed])
         sut.presentFetchedBreeds(response: response)
         
         // Then
@@ -100,7 +100,7 @@ class ListBreedsPresenterTests: XCTestCase
         sut.viewController = listBreedsDisplayLogicSpy
         
         // When
-        let response = ListBreeds.FetchBreeds.Response(breeds: [], error: nil)
+        let response = ListBreeds.FetchBreeds.Response(breeds: [])
         sut.presentFetchedBreeds(response: response)
         
         // Then

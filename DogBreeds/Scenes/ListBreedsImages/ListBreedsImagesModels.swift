@@ -24,12 +24,10 @@ enum ListBreedsImages
     struct Response
     {
         var breedImagesURLs: [String]
-        var error: BreedsStoreError?
     }
     struct ViewModel
     {
         var imagesURLs: [String]
-        var errorMessage: String?
     }
   }
 }

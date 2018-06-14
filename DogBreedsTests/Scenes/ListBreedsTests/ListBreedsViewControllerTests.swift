@@ -104,7 +104,7 @@ class ListBreedsViewControllerTests: XCTestCase
         
         // When
         let displayedBreeds = [ListBreeds.FetchBreeds.ViewModel.DisplayedBreed(name: "Spaniel")]
-        let viewModel = ListBreeds.FetchBreeds.ViewModel(displayedBreeds: displayedBreeds, errorMessage: nil)
+        let viewModel = ListBreeds.FetchBreeds.ViewModel(displayedBreeds: displayedBreeds)
         sut.displayFetchedBreeds(viewModel: viewModel)
         
         // Then
